@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" >
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>IPLANT</title>
+        <meta name="description" content="A 'how to' page for IPLANT navigation" >
+        <meta name="authors" content="R.McMillan, T.Gray, G.Bansal" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="https://rawgit.com/gionkunz/chartist-js/master/dist/chartist.min.css">
+        
+        <style>
+            #chart {
+                height: 100%;
+                width: 100%;
+            }
+        </style>
+        
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div id="navbar"></div>
+            <h1>Trending</h1>
+        
+    
+        <!--<p>To be filled with 3 boxes for trending, graphs and bom intergration</p>-->
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-4">
+                    <div style="width:500px;height:200px;border:1px solid #000;">Temperature
+                    	<div class="ct-chart" id="chart1" style="height:90%;"></div>
+                    </div>
+                    <p></p>
+                    <div style="width:500px;height:200px;border:1px solid #000;">Humidity
+                    	<div class="ct-chart" id="chart2" style="height:90%;"></div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div style="width:20px;height:416px;"></div>
+                </div>
+                <div class="col-xs-4">
+                  <div style="width:500px;height:200px;border:1px solid #000;">Light Intensity
+                    <div class="ct-chart" id="chart3" style="height:90%;"></div>
+                  </div>
+                  <p></p>
+                  <div style="width:500px;height:200px;border:1px solid #000;">Soil Moisture
+                    <div class="ct-chart" id="chart4" style="height:90%;"></div>
+                  </div>
+                </div>
+            </div>
+            
+        </div>
+        <p></p>
+        <a class="weatherwidget-io" href="https://forecast7.com/en/n37d81144d96/melbourne/" data-label_1="MELBOURNE" data-label_2="WEATHER" data-theme="original" >MELBOURNE WEATHER</a>
+      </div> 
+        <div class="container">
+            <div id="footer"></div>
+        </div>
+        <div style="margin-bottom: 50px;"></div> 
+
+        <script type="text/javascript" src="https://rawgit.com/gionkunz/chartist-js/master/dist/chartist.js"></script>
+        <script>
+          new Chartist.Line('#chart1', {
+            labels: [1, 2, 3, 4, 5, 6, 7, 8],
+            series: [
+              [5, 9, 7, 8, 5, 3, 5, 4]
+            ]
+          }, {
+            low: 0,
+            showArea: false
+          });
+          
+          new Chartist.Line('#chart2', {
+            labels: [1, 2, 3, 4, 5, 6, 7, 8],
+            series: [
+              [5, 5, 4,  9, 7, 8, 5, 3],
+              [7, 8, 2,  3, 5, 9, 7, 5]
+            ]
+          }, {
+            low: 0,
+            showArea: false
+          });
+          
+          new Chartist.Line('#chart3', {
+            labels: [1, 2, 3, 4, 5, 6, 7, 8],
+            series: [
+              [5, 4, 5, 9, 7, 8, 5, 3]
+            ]
+          }, {
+            low: 0,
+            showArea: false
+          });
+          new Chartist.Line('#chart4', {
+            labels: [1, 2, 3, 4, 5, 6, 7, 8],
+            series: [
+              [5, 4, 5, 9, 7, 8, 5, 3]
+            ]
+          }, {
+            low: 0,
+            showArea: false
+          });
+        </script> 
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="app.js"></script>
+        <script>
+          !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+        </script>
+
+    </body>
+</html>

@@ -1,70 +1,47 @@
 [
     {
-    "id": 0,
-    "name": "Alex's iPhone",
-    "user": "alex",
-    "sensorData": [
-        {
-        "ts": "1529542230",
-        "temp": 12,
-        "loc": {
-            "lat": -37.84674,
-            "lon": 145.115113
-        }
-        },
-        {
-        "ts": "1529542230",
-        "temp": 17,
-        "loc": {
-            "lat": -37.84674,
-            "lon": 145.115113
-        }
-        }
-    ]
+      "id": 0,
+      "name": "Basil",
+      "user": "Floor 1",
+      "temp": "21.6°",
+      "light": "20000Lux",
+      "humidity": "60%",
+      "moisture": "72"
     },
     {
-    "id": 1,
-    "name": "Mary's iPhone",
-    "user": "mary123",
-    "sensorData": [
-        {
-        "ts": "1529542743",
-        "temp": 14,
-        "loc": {
-            "lat": 33.812092,
-            "lon": -117.918974
-        }
-        }
-    ]
+      "id": 1,
+      "name": "Rose",
+      "user": "Floor 1",
+      "temp": "25.2°",
+      "light": "17000Lux",
+      "humidity": "50%",
+      "moisture": "42"
     },
     {
-    "id": 2,
-    "name": "Sam's iPhone",
-    "user": "sam",
-    "sensorData": [
-        {
-        "ts": "1529572230",
-        "temp": 14,
-        "loc": {
-            "lat": -37.850026,
-            "lon": 145.117683
-        }
-        }
-    ]
+      "id": 2,
+      "name": "Suculent",
+      "user": "Floor 3",
+      "temp": "30.6°",
+      "light": "50000Lux",
+      "humidity": "40%",
+      "moisture": "10"
     },
     {
-    "name": "Bob's Samsung Galaxy",
-    "user": "bob",
-    "sensorData": [
-        {
-        "ts": "1529545935",
-        "temp": 14,
-        "loc": {
-            "lat": -37.839587,
-            "lon": 145.101386
-        }
-        }
-    ],
-    "id": 4
+      "id": 3,
+      "name": "Basil",
+      "user": "Floor 2",
+      "temp": "15.0°",
+      "light": "15000Lux",
+      "humidity": "80%",
+      "moisture": "62"
+    },
+    {
+      "id": 4,
+      "name": "Tulip",
+      "user": "Floor 2",
+      "temp": "20.1°",
+      "light": "10000Lux",
+      "humidity": "50%",
+      "moisture": "22"
     }
-    ]
+]

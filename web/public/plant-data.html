@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="description" content="A 'how to' page for IPLANT navigation" />
+        <meta name="authors" content="R.McMillan, T.Gray, G.Bansal" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>IPLANT</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+    </head>
+
+    <body>
+        <div class="container">
+            <div id="navbar"></div>
+            <h1>Plants</h1>
+            <table id="plants" class="table">
+                <thead>
+                    <tr>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+            </table>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="historyModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">Plant History</h3>
+                    </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Temperature</th>
+                                    <th>Light Intensity</th>
+                                    <th>Humidity</th>
+                                    <th>Soil Moisture</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyContent"></tbody>
+                        </table>
+                        <div class="modal-footer"></div>
+                        <div class="container">
+                            <div id="navbar"></div>
+                            <div class="form-group">
+                                <h3 for="command">Auto / Manual</h3>
+                                <br>
+                                <div id="status">Currently in Auto Control</div>
+                                <br>
+                                <div class="btn-group">
+                                    <p><button class ="btn btn-success" id="auto" onclick="myFunction()" >Auto Mode </button></p>
+                                    <p><button class ="btn btn-danger" id="manual" onclick="myFunction()" >Manual Mode </button></p>
+                                </div>
+                                <br>
+                                <br>
+                                <h3 for="command">Operate Water Valve</h3>
+                                <br>
+                                <label for="command">Space filler for valve status</label>
+                                <br>
+                                <button class="btn btn-success" id="open">Open</button>
+                                <button class="btn btn-success" id="close">Close</button>
+                                <br><br><br>  
+                            <div id="footer"></div>
+                        </div>   
+                        <script>
+                            function myFunction() 
+                            {
+                              var status = document.getElementById("status");
+                              var m_id = document.getElementById("manual");
+                              var a_id = document.getElementById("auto");
+                
+                              if(m_id.clicked == true)
+                              {
+                                status.innerHTML = "Currently in Auto Control";  
+                              }
+                              else if(a_id.clicked == true)
+                              {
+                                status.innerHTML = "Currently in Manual Control";
+                              }
+                            }
+                
+                            function mFunction() 
+                            {
+                              var status = document.getElementById("status");
+                              if (status.innerHTML === "Currently in Auto Control") 
+                              {
+                                status.innerHTML = "Currently in Manual Control";
+                              }
+                            }
+                
+                            function aFunction() 
+                            {
+                              var status = document.getElementById("status");
+                              if (status.innerHTML === "Currently in Manual Control") 
+                              {
+                                status.innerHTML = "Currently in Auto Control";
+                              }
+                            }
+                        </script>
+                        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+                        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+                        <script src="app.js"></script>       
+                </div>
+            </div>
+        </div>
+    </div>
+        <div class="container">
+            <div id="footer"></div>
+        </div>   
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>

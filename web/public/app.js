@@ -1,145 +1,187 @@
-
 $('#navbar').load('navbar.html');
-
 $('#footer').load('footer.html');
 
+const MQTT_URL = 'http://localhost:5001/system-control';
 const API_URL = 'http://localhost:5000/api';
 
-const currentUser = localStorage.getItem('user');
+const currentUser = localStorage.getItem('name');
 
-const devices = JSON.parse(localStorage.getItem('devices')) || [];
-//const users = localStorage.getItem('users') || [];
-
-if (currentUser) {
-    $.get(`${API_URL}/users/${currentUser}/devices`)
-        .then(response => {
-            response.forEach((device) => {
-                $('#devices tbody').append(`
-                <tr data-device-id=${device._id}>
-                    <td>${device.user}</td>
-                    <td>${device.name}</td>
-                </tr>`
-                );
-            });
-            $('#devices tbody tr').on('click', (e) => {
-                const deviceId = e.currentTarget.getAttribute('data-device-id');
-                $.get(`${API_URL}/devices/${deviceId}/device-history`)
-                .then(response => {
-                    response.map(sensorData => {
-                    $('#historyContent').append(`
-                        <tr>
-                        <td>${sensorData.ts}</td>
-                        <td>${sensorData.temp}</td>
-                        <td>${sensorData.loc.lat}</td>
-                        <td>${sensorData.loc.lon}</td>
-                        </tr>
-                    `);
-                    });
-                    $('#historyModal').modal('show');
-                });
-            });
-        })
-        .catch(error => {
-            console.error(`Error: ${error}`);
-        });
-} else {
-    const path = window.location.pathname;
-    if (path !== '/login' && path !== '/registration') {
-        location.href = '/login';
-    }
-}
-
-$.get(`${API_URL}/devices `)
-    .then(response => {
-        response.forEach(device => {
-            $('#devices tbody').append(`
-            <tr>
-            <td>${device.user}</td>
-            <td>${device.name}</td>
+if(currentUser == "admin")
+{
+    $.get(`${API_URL}/plants`).then(response =>
+    {
+        response.forEach(plant =>
+        {
+            $('#plants tbody').append(`
+            <tr data-plant-id=${plant._id}>
+            <td>
+            <div class="card" style="width:200px">
+                <div class="card-body">
+                    <h4 class="card-title">${plant.name}</h4>
+                    <button class="btn btn-primary">See Plant History</a>
+                </div>
+            </div>
+            </td>
             </tr>`
             );
         });
-    })
-    .catch(error => {
+
+        $('#plants tbody tr').on('click', () => {
+            $.get(`${API_URL}/plants`).then(response => 
+            {
+                response.forEach((plant) => {
+                $('#historyContent').append(`
+                    <tr>
+                    <td>${plant.user}</td>
+                    <td>${plant.temp + '°'}</td>
+                    <td>${plant.light + ' LUX'}</td>
+                    <td>${plant.humidity + ' %RH'}</td>
+                    <td>${plant.moisture + ' MU'}</td>
+                    </tr>
+                `);
+                });
+                $('#historyModal').modal('show');
+            });
+        });
+    }).catch(error =>
+    {
         console.error(`Error: ${error}`);
     });
+}
+else if (currentUser)
+{
+    $.get(`${API_URL}/users/${currentUser}/plants`).then(response => 
+    {
+        response.forEach((plant) => 
+        {
+            $('#plants tbody').append(`
+            <tr data-plant-id=${plant._id}>
+            <td>
+            <div class="card" style="width:200px">
+                <div class="card-body">
+                    <h4 class="card-title">${plant.name}</h4>
+                    <button class="btn btn-primary">See Plant History</a>
+                </div>
+            </div>
+            </td>
+            </tr>`);
+        });
 
-
-$('#add-device').on('click', () => {
+        $('#plants tbody tr button').on('click', () => {
+            $.get(`${API_URL}/users/${currentUser}/plants`).then(response => 
+            {
+                response.forEach((plant) => {
+                $('#historyContent').append(`
+                    <tr>
+                    <td>${plant.user}</td>
+                    <td>${plant.temp + '°'}</td>
+                    <td>${plant.light + ' LUX'}</td>
+                    <td>${plant.humidity + ' %RH'}</td>
+                    <td>${plant.moisture + ' MU'}</td>
+                    </tr>
+                `);
+                });
+                $('#historyModal').modal('show');
+            });
+        });
+        
+    }).catch(error => 
+    {
+        console.error(`Error: ${error}`);
+    });
+}
+else 
+{
+    const path = window.location.pathname;
+    if (path !== '/login' && path !== '/registration') 
+    {
+        location.href = '/login';
+    }
+}
+   
+$('#add-plant').on('click', () => 
+{
     const name = $('#name').val();
     const user = $('#user').val();
-    const sensorData = [];
-    const body = {
+    const temp = $('#temp').val();
+    const light = $('#light').val();
+    const humidity = $('#humidity').val();
+    const moisture = $('#moisture').val();
+    const body = 
+    {
         name,
         user,
-        sensorData
+        temp,
+        light,
+        humidity,
+        moisture
     };
-    $.post(`${API_URL}/devices`, body)
-        .then(response => {
-            location.href = '/';
-        })
-        .catch(error => {
-            console.error(`Error: ${error}`);
-        });
+
+    $.post(`${API_URL}/plants`, body).then(response => 
+    {
+        location.href = '/';
+    }).catch(error => 
+    {
+        console.error(`Error: ${error}`);
+    });
 });
 
-$('#register-button').on('click', () => {
-    var name = $('#user').val();
-    var password = $('#password').val();
-    var confirmpassword = $('#confirmpassword').val();
+$('#system-control').on('click', function()
+{
+    const command = $('#command').val();
+    const plantID = $('#plantID').val();
 
-    $.post(` ${API_URL}/registration `, { name, password, isAdmin: false })
-        .then((response) => {
-            if (response == "User already exists!") {
-                alert("User already exists!");
-                location.href = '/login';
-            }else if (response.message == "Created new User") {
-                //alert("Dekho");
-                    if (password == confirmpassword) {
-                        localStorage.setItem('users', name);
-                        localStorage.setItem('isAdmin', response.comfirmpassword);
-                        location.href = '/login';
-                    }else 
-                    alert("Passwords do not match, please try again!");
-
-                    }else {
-                    $('#message').append(` <p class="alert alert-danger">${response}<p> `);
-                    }
-        });
+    $.post(`${MQTT_URL}/system-control`, { command, plantID });
 });
 
-$('#login-button').on('click', () => {
-    const name = $('#user').val();
+$('#register').on('click', () =>
+{
+    const name = $('#username').val();
     const password = $('#password').val();
+    const confirm = $('#confirm').val();
 
-    $.post(` ${API_URL}/authenticate `, { name, password })
-        .then((response) => {
-            console.log(response);
-            if (response == "User does not exist!") {
-                alert("User does not exist. Create an account!");
-                location.href = '/registration';
-            }
-            if (response == "Incorrect Password!") {
-                alert("Incorrect Password!");
-            }
-            if (response.success) {
-                localStorage.setItem('user', name);
-                localStorage.setItem('isAdmin', response.isAdmin);
-                localStorage.setItem('isAuthenticated', true);
-                location.href = '/';
-            } else {
-                $('#message').append(` <p class="alert alert-danger">${response}<p> `);
+    if (password != confirm)
+    {
+        $('#alert').append(`<p class="alert alert-danger">Passwords do not match</p>`);
+    }
+    else
+    {
+        $.post(`${API_URL}/registration`, { name, password }).then((response) =>
+        {
+            if (response.success) 
+            {
+                location.href = '/login';
+            } 
+            else 
+            {
+                $('#alert').append(`<p class="alert alert-danger">${response}</p>`); 
             }
         });
+    }
 });
 
-const logout = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('isAuthenticated');
+$('#login').on('click', () => 
+{
+    const username = $('#username').val();
+    const password = $('#password').val();
+    $.post(`${API_URL}/authenticate`, { "name": username, password }).then((response) =>
+    {
+        if (response.success) 
+        {
+            localStorage.setItem('name', username);
+            localStorage.setItem('isAuthenticated', true);
+            location.href = '/plant-data';
+        } 
+        else 
+        {
+            $('#message').append(`<p class="alert alert-danger">${response}</p>`);
+        }
+    });
+});
+
+const logout = () => 
+{
+    localStorage.removeItem('name');
+    localStorage.removeItem('isAuthenticated');   
     location.href = '/login';
-}
-
-$('#send-command').on('click', function() { 
-    const command = $('#command').val(); 
-    console.log(`command is: ${command}`);
-});
+}  
